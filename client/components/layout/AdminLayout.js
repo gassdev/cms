@@ -8,7 +8,7 @@ const AdminLayout = ({ children, currentDefault = 'dashboard' }) => {
     <Layout>
       <AdminNav currentDefault={currentDefault} />
       <Layout>
-        <Content>{children}</Content>
+        <Content style={{padding:'10px'}}>{children}</Content>
       </Layout>
     </Layout>
   )

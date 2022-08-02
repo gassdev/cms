@@ -1,7 +1,8 @@
 import {
-  AppstoreOutlined,
   MailOutlined,
   SettingOutlined,
+  UserAddOutlined,
+  UserOutlined,
 } from '@ant-design/icons'
 import { Menu } from 'antd'
 import { useState } from 'react'
@@ -24,7 +25,7 @@ const items = [
       </Link>
     ),
     key: 'signup',
-    icon: <AppstoreOutlined />,
+    icon: <UserAddOutlined />,
   },
   {
     label: (
@@ -33,7 +34,7 @@ const items = [
       </Link>
     ),
     key: 'signin',
-    icon: <AppstoreOutlined />,
+    icon: <UserOutlined />,
   },
   {
     style: { marginLeft: 'auto' },
