@@ -1,10 +1,53 @@
+import { useContext, useState } from 'react'
 import { Row, Col, Button, Form, Input } from 'antd'
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
 import Link from 'next/link'
+import axios from 'axios'
+import toast from 'react-hot-toast'
+import { AuthContext } from '../context/auth'
+import { useRouter } from 'next/router'
 
 const Signup = () => {
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values)
+  // state
+  const [loading, setLoading] = useState(false)
+
+  // hook
+  const router = useRouter()
+  console.log(router)
+
+  // context
+  const [auth, setAuth] = useContext(AuthContext)
+
+  // FormInstance
+  const [form] = Form.useForm()
+
+  const onFinish = async (values) => {
+    // console.log('Received values of form: ', values)
+    try {
+      setLoading(true)
+      const { data } = await axios.post('/signup', values)
+      if (data?.error) {
+        toast.error(`${data.error}`)
+      } else {
+        // console.log('signup response ==> ', data)
+
+        // save in context
+        setAuth(data)
+
+        // save in local storage
+        localStorage.setItem('cms-auth', JSON.stringify(data))
+
+        toast.success('Successfully signed up!')
+        form.resetFields()
+      }
+      setLoading(false)
+      // redirect
+      router.push('/admin')
+    } catch (err) {
+      toast.error('Signup failed. Try again')
+      console.log(err)
+      setLoading(false)
+    }
   }
   return (
     <Row>
@@ -18,8 +61,8 @@ const Signup = () => {
         >
           Sign Up
         </h1>
-
         <Form
+          form={form}
           name="normal_login"
           className="login-form"
           initialValues={{ remember: true }}
@@ -59,6 +102,7 @@ const Signup = () => {
               type="primary"
               htmlType="submit"
               className="login-form-button"
+              loading={loading}
             >
               Register
             </Button>
