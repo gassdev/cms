@@ -13,7 +13,7 @@ const Signup = () => {
 
   // hook
   const router = useRouter()
-  console.log(router)
+  // console.log(router)
 
   // context
   const [auth, setAuth] = useContext(AuthContext)

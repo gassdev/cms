@@ -1,10 +1,48 @@
+import { useContext, useState } from 'react'
 import { Row, Col, Button, Form, Input } from 'antd'
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
 import Link from 'next/link'
+import axios from 'axios'
+import toast from 'react-hot-toast'
+import { AuthContext } from '../context/auth'
+import { useRouter } from 'next/router'
 
 const Signin = () => {
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values)
+  // context
+  const [_, setAuth] = useContext(AuthContext)
+
+  // state
+  const [loading, setLoading] = useState(false)
+
+  // hook
+  const router = useRouter()
+
+  const onFinish = async (values) => {
+    // console.log('Received values of form: ', values)
+    try {
+      setLoading(true)
+      const { data } = await axios.post('/signin', values)
+      if (data?.error) {
+        toast.error(data.error)
+      } else {
+        // console.log('sigin response ==> ', data)
+        // save user and token to context
+        setAuth(data)
+
+        // save user and token to local storage
+        localStorage.setItem('cms-auth', JSON.stringify(data))
+
+        toast.success('Successfully signed in')
+
+        // redirect user to home page
+        router.push('/')
+      }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      console.log('err => ', err)
+      toast.error('Signin failed. Try again.')
+    }
   }
   return (
     <Row>
@@ -54,6 +92,7 @@ const Signin = () => {
               type="primary"
               htmlType="submit"
               className="login-form-button"
+              loading={loading}
             >
               Login
             </Button>
