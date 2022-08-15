@@ -23,6 +23,16 @@ const TopNav = () => {
   const router = useRouter()
   // console.log(router.pathname)
 
+  const roleBasedLink = () => {
+    if (auth?.user?.role === 'Admin') {
+      return '/admin'
+    } else if (auth?.user?.role === 'Author') {
+      return '/author'
+    } else {
+      return '/subscriber'
+    }
+  }
+
   const items = [
     {
       label: (
@@ -56,7 +66,7 @@ const TopNav = () => {
 
     auth?.user !== null && {
       style: { marginLeft: 'auto' },
-      label: 'Dashbaord',
+      label: auth?.user?.name || 'Dashboard',
       key: 'SubMenu',
       icon: <SettingOutlined />,
       children: [
@@ -66,8 +76,8 @@ const TopNav = () => {
           children: [
             {
               label: (
-                <Link href="/admin">
-                  <a>Admin</a>
+                <Link href={roleBasedLink()}>
+                  <a>Dashboard</a>
                 </Link>
               ),
               key: 'setting:2',
@@ -126,6 +136,7 @@ const TopNav = () => {
       selectedKeys={[current]}
       mode="horizontal"
       items={items}
+      theme="dark"
     />
   )
 }

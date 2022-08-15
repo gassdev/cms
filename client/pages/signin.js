@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Row, Col, Button, Form, Input } from 'antd'
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
 import Link from 'next/link'
@@ -9,13 +9,19 @@ import { useRouter } from 'next/router'
 
 const Signin = () => {
   // context
-  const [_, setAuth] = useContext(AuthContext)
+  const [auth, setAuth] = useContext(AuthContext)
 
   // state
   const [loading, setLoading] = useState(false)
 
   // hook
   const router = useRouter()
+
+  useEffect(() => {
+    if (auth?.token) {
+      router.push('/')
+    }
+  }, [auth])
 
   const onFinish = async (values) => {
     // console.log('Received values of form: ', values)
@@ -35,7 +41,13 @@ const Signin = () => {
         toast.success('Successfully signed in')
 
         // redirect user to home page
-        router.push('/')
+        if (data?.user?.role === 'Admin') {
+          router.push('/admin')
+        } else if (data?.user?.role === 'Author') {
+          router.push('/author')
+        } else {
+          router.push('/subscriber')
+        }
       }
       setLoading(false)
     } catch (err) {

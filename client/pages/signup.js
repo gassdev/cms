@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Row, Col, Button, Form, Input } from 'antd'
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
 import Link from 'next/link'
@@ -20,6 +20,12 @@ const Signup = () => {
 
   // FormInstance
   const [form] = Form.useForm()
+
+  useEffect(() => {
+    if (auth?.token) {
+      router.push('/')
+    }
+  }, [auth])
 
   const onFinish = async (values) => {
     // console.log('Received values of form: ', values)

@@ -155,3 +155,12 @@ export const resetPassword = async (req, res) => {
     console.log(err)
   }
 }
+
+export const currentUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id)
+    res.json({ ok: true })
+  } catch (err) {
+    console.log(err)
+  }
+}
