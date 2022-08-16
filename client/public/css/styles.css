@@ -1,0 +1,13 @@
+.ProseMirror {
+  height: 500px;
+  padding: 15px 25px;
+  overflow: scroll;
+}
+
+.editor-scroll ::-webkit-scrollbar {
+  display: none;
+}
+
+.editor-scroll {
+  scrollbar-width: none;
+}

@@ -42,7 +42,7 @@ const items = [
       'all-posts',
     ),
     getItem(
-      <Link href="/admin/post/new">
+      <Link href="/admin/posts/new">
         <a>Add New</a>
       </Link>,
       'new-post',

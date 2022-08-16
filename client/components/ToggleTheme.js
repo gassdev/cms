@@ -8,6 +8,7 @@ const ToggleTheme = () => {
     <>
       <Head>
         <link rel="stylesheet" href={`/css/${theme}.css`} />
+        <link rel="stylesheet" href={`/css/styles.css`} />
       </Head>
       {theme === 'light' ? (
         <span

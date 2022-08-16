@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 
 import authRoutes from './routes/auth'
 import categoryRoutes from './routes/category'
+import postRoutes from './routes/post'
 
 const morgan = require('morgan')
 
@@ -25,5 +26,6 @@ app.use(morgan('dev'))
 // route middlewares
 app.use('/api', authRoutes)
 app.use('/api', categoryRoutes)
+app.use('/api', postRoutes)
 
 app.listen(8000, () => console.log('Server running on port 8000'))
